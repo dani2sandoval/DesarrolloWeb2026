@@ -18,12 +18,16 @@
 export interface UrlParts {
   /** Protocolo tal como lo devuelve la WHATWG URL, p. ej. "https:". */
   protocol: string;
+
   /** Host (puede incluir puerto), p. ej. "api.ejemplo.com:443". */
   host: string;
+
   /** Ruta, p. ej. "/users". */
   pathname: string;
+
   /** Query string con el "?" inicial, p. ej. "?id=1&name=Ana". */
   search: string;
+
   /** Lista de pares [clave, valor] de los query params. */
   query: Array<[string, string]>;
 }
@@ -45,24 +49,23 @@ export type Headers = Record<string, string>;
 // ---------------------------------------------------------------------------
 
 /**
- * TODO: Analiza una URL y devuelve sus partes.
+ * Analiza una URL y devuelve sus partes.
  *
- * Pista: usa el constructor `new URL(url)` (viene con Node, no requiere
- * ninguna librería). Sus propiedades te dan todo lo que necesitas:
+ * @param url URL que se desea analizar.
+ * @returns Las partes principales de la URL.
  *
- *   const u = new URL("https://api.ejemplo.com/users?id=1");
- *   u.protocol // → "https:"
- *   u.host     // → "api.ejemplo.com"
- *   u.pathname // → "/users"
- *   u.search   // → "?id=1"
- *   u.searchParams.entries() // → iterador [["id","1"]]
- *
- * Si la URL no es válida, `new URL()` lanza TypeError — no hace falta
- * que lo manejes aparte, se propagará solo.
+ * Si la URL no es válida, el constructor URL lanza un error automáticamente.
  */
 export function parseUrl(url: string): UrlParts {
-  // TODO: tu implementación aquí
-  throw new Error("Not implemented");
+  const parsedUrl = new URL(url);
+
+  return {
+    protocol: parsedUrl.protocol,
+    host: parsedUrl.host,
+    pathname: parsedUrl.pathname,
+    search: parsedUrl.search,
+    query: Array.from(parsedUrl.searchParams.entries()),
+  };
 }
 
 /**
@@ -133,6 +136,7 @@ export function summarizeRequest(
 
 if (require.main === module) {
   const [, , cmd, ...args] = process.argv;
+
   try {
     if (cmd === "parse-url" && args[0]) {
       const parts = parseUrl(args[0]);
@@ -151,7 +155,9 @@ if (require.main === module) {
       console.log('  npm start parse-url "https://ejemplo.com/path?a=1"');
       console.log("  npm start status 404");
       console.log('  npm start headers "Content-Type: application/json"');
-      console.log('  npm start summary "https://x.com" 200 "Content-Type: application/json"');
+      console.log(
+        '  npm start summary "https://x.com" 200 "Content-Type: application/json"',
+      );
     }
   } catch (e) {
     console.error("Error:", (e as Error).message);
