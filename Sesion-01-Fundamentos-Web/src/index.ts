@@ -6,8 +6,8 @@
  * Esta tarea NO usa la red, ni async/await, ni librerías externas.
  * Solo la biblioteca estándar de Node + tipos básicos de TypeScript.
  *
- * Idea: aplicar lo que aprendiste sobre HTTP (URLs, métodos, códigos
- * de estado y cabeceras) implementando pequeñas funciones puras.
+ * Idea: aplicar lo aprendido sobre HTTP: URLs, métodos, códigos
+ * de estado y cabeceras mediante pequeñas funciones puras.
  */
 
 // ---------------------------------------------------------------------------
@@ -16,23 +16,23 @@
 
 /** Resultado de analizar una URL. */
 export interface UrlParts {
-  /** Protocolo tal como lo devuelve la WHATWG URL, p. ej. "https:". */
+  /** Protocolo, por ejemplo: "https:". */
   protocol: string;
 
-  /** Host (puede incluir puerto), p. ej. "api.ejemplo.com:443". */
+  /** Dominio y puerto, si existe. */
   host: string;
 
-  /** Ruta, p. ej. "/users". */
+  /** Ruta de la URL. */
   pathname: string;
 
-  /** Query string con el "?" inicial, p. ej. "?id=1&name=Ana". */
+  /** Cadena de parámetros incluyendo el signo "?". */
   search: string;
 
-  /** Lista de pares [clave, valor] de los query params. */
+  /** Lista de parámetros de consulta. */
   query: Array<[string, string]>;
 }
 
-/** Categoría de un código de estado HTTP. */
+/** Categorías posibles de un código de estado HTTP. */
 export type StatusCategory =
   | "1xx Informativo"
   | "2xx Éxito"
@@ -41,20 +41,19 @@ export type StatusCategory =
   | "5xx Error del servidor"
   | "Desconocido";
 
-/** Mapa de cabeceras HTTP. */
+/** Objeto que representa cabeceras HTTP. */
 export type Headers = Record<string, string>;
 
 // ---------------------------------------------------------------------------
-// Funciones a implementar
+// Funciones
 // ---------------------------------------------------------------------------
 
 /**
- * Analiza una URL y devuelve sus partes.
+ * Analiza una URL y devuelve sus partes principales.
  *
  * @param url URL que se desea analizar.
- * @returns Las partes principales de la URL.
- *
- * Si la URL no es válida, el constructor URL lanza un error automáticamente.
+ * @returns Partes principales de la URL.
+ * @throws Error si la URL no es válida.
  */
 export function parseUrl(url: string): UrlParts {
   const parsedUrl = new URL(url);
@@ -72,18 +71,26 @@ export function parseUrl(url: string): UrlParts {
  * Clasifica un código de estado HTTP según su rango.
  *
  * @param code Código de estado HTTP.
- * @returns La categoría correspondiente al código.
+ * @returns Categoría correspondiente al código.
  */
 export function classifyStatus(code: number): StatusCategory {
   if (code >= 100 && code <= 199) {
     return "1xx Informativo";
-  } else if (code >= 200 && code <= 299) {
+  }
+
+  if (code >= 200 && code <= 299) {
     return "2xx Éxito";
-  } else if (code >= 300 && code <= 399) {
+  }
+
+  if (code >= 300 && code <= 399) {
     return "3xx Redirección";
-  } else if (code >= 400 && code <= 499) {
+  }
+
+  if (code >= 400 && code <= 499) {
     return "4xx Error del cliente";
-  } else if (code >= 500 && code <= 599) {
+  }
+
+  if (code >= 500 && code <= 599) {
     return "5xx Error del servidor";
   }
 
@@ -91,80 +98,180 @@ export function classifyStatus(code: number): StatusCategory {
 }
 
 /**
- * TODO: Parsea un texto con líneas de cabeceras HTTP al formato
- * `Record<string, string>`. El separador entre nombre y valor es ":".
+ * Convierte un bloque de texto con cabeceras HTTP en un objeto.
  *
- * Reglas:
- *   - Cada línea no vacía debe tener formato "Nombre: valor".
- *   - Ignora líneas vacías o que no contengan ":".
- *   - No tienes que normalizar mayúsculas/minúsculas del nombre.
+ * Cada cabecera debe tener el formato:
+ * Nombre: valor
  *
- * Ejemplo:
- *   parseHeaders("Content-Type: application/json\nAuthorization: Bearer abc")
- *   → { "Content-Type": "application/json", "Authorization": "Bearer abc" }
+ * Las líneas vacías y las líneas sin dos puntos se ignoran.
  *
- * Pista: `text.split("\n")` te da las líneas; `String.split(":")` te separa
- * nombre y valor. Recuerda `.trim()` para quitar espacios sobrantes.
+ * @param text Texto que contiene las cabeceras.
+ * @returns Objeto con las cabeceras encontradas.
  */
 export function parseHeaders(text: string): Headers {
-  // TODO: tu implementación aquí
-  throw new Error("Not implemented");
+  const headers: Headers = {};
+  const lines = text.split(/\r?\n/);
+
+  for (const line of lines) {
+    if (!line.trim()) {
+      continue;
+    }
+
+    const separatorIndex = line.indexOf(":");
+
+    if (separatorIndex === -1) {
+      continue;
+    }
+
+    const name = line.slice(0, separatorIndex).trim();
+    const value = line.slice(separatorIndex + 1).trim();
+
+    if (!name) {
+      continue;
+    }
+
+    headers[name] = value;
+  }
+
+  return headers;
 }
 
 /**
- * TODO: Combina las funciones anteriores en un resumen legible.
+ * Genera un resumen legible de una petición HTTP.
  *
- * El formato exacto lo decides tú (los tests solo verifican que el string
- * no esté vacío y que contenga la URL y el código). Un ejemplo:
- *
- *   Resumen de la petición
- *   ──────────────────────
- *   URL:     https://api.ejemplo.com/users
- *   Status:  200 (2xx Éxito)
- *   Headers:
- *     • Content-Type: application/json
- *     • Authorization: Bearer abc
+ * @param url URL de la petición.
+ * @param status Código de estado HTTP.
+ * @param headersText Cabeceras HTTP en formato de texto.
+ * @returns Resumen de la petición.
  */
 export function summarizeRequest(
   url: string,
   status: number,
   headersText: string,
 ): string {
-  // TODO: tu implementación aquí
-  throw new Error("Not implemented");
+  const urlParts = parseUrl(url);
+  const statusCategory = classifyStatus(status);
+  const headers = parseHeaders(headersText);
+  const headerEntries = Object.entries(headers);
+
+  const lines: string[] = [
+    "Resumen de la petición HTTP",
+    `URL: ${url}`,
+    `Protocolo: ${urlParts.protocol}`,
+    `Host: ${urlParts.host}`,
+    `Ruta: ${urlParts.pathname}`,
+    `Estado: ${status} - ${statusCategory}`,
+    "Cabeceras:",
+  ];
+
+  if (headerEntries.length === 0) {
+    lines.push("- Sin cabeceras");
+  } else {
+    for (const [name, value] of headerEntries) {
+      lines.push(`- ${name}: ${value}`);
+    }
+  }
+
+  return lines.join("\n");
 }
 
 // ---------------------------------------------------------------------------
-// CLI (opcional, pero recomendado para probar manualmente)
+// CLI
 // ---------------------------------------------------------------------------
 
-if (require.main === module) {
-  const [, , cmd, ...args] = process.argv;
+/**
+ * Ejecuta el comando indicado desde la terminal.
+ */
+function main(): void {
+  const [, , command, ...args] = process.argv;
+
+  if (!command) {
+    console.log("Uso:");
+    console.log('  npm start -- parse-url "https://ejemplo.com/ruta?id=1"');
+    console.log("  npm start -- status 404");
+    console.log('  npm start -- headers "Content-Type: application/json"');
+    console.log(
+      '  npm start -- summary "https://ejemplo.com" 200 "Content-Type: application/json"',
+    );
+    return;
+  }
 
   try {
-    if (cmd === "parse-url" && args[0]) {
-      const parts = parseUrl(args[0]);
-      console.log(JSON.stringify(parts, null, 2));
-    } else if (cmd === "status" && args[0]) {
-      const cat = classifyStatus(Number(args[0]));
-      console.log(cat);
-    } else if (cmd === "headers" && args.length > 0) {
-      const h = parseHeaders(args.join(" "));
-      console.log(JSON.stringify(h, null, 2));
-    } else if (cmd === "summary" && args.length >= 2) {
-      const [url, status, ...rest] = args;
-      console.log(summarizeRequest(url, Number(status), rest.join(" ")));
-    } else {
-      console.log("Uso:");
-      console.log('  npm start parse-url "https://ejemplo.com/path?a=1"');
-      console.log("  npm start status 404");
-      console.log('  npm start headers "Content-Type: application/json"');
-      console.log(
-        '  npm start summary "https://x.com" 200 "Content-Type: application/json"',
-      );
+    switch (command) {
+      case "parse-url": {
+        const url = args[0];
+
+        if (!url) {
+          throw new Error("Debes proporcionar una URL.");
+        }
+
+        console.log(JSON.stringify(parseUrl(url), null, 2));
+        break;
+      }
+
+      case "status": {
+        const codeText = args[0];
+
+        if (!codeText) {
+          throw new Error("Debes proporcionar un código de estado.");
+        }
+
+        const code = Number(codeText);
+
+        if (!Number.isInteger(code)) {
+          throw new Error("El código de estado debe ser un número entero.");
+        }
+
+        console.log(classifyStatus(code));
+        break;
+      }
+
+      case "headers": {
+        const headersText = args.join(" ");
+
+        if (!headersText) {
+          throw new Error("Debes proporcionar las cabeceras.");
+        }
+
+        console.log(JSON.stringify(parseHeaders(headersText), null, 2));
+        break;
+      }
+
+      case "summary": {
+        const url = args[0];
+        const statusText = args[1];
+        const headersText = args.slice(2).join(" ");
+
+        if (!url || !statusText) {
+          throw new Error(
+            "Debes proporcionar la URL, el código de estado y las cabeceras.",
+          );
+        }
+
+        const status = Number(statusText);
+
+        if (!Number.isInteger(status)) {
+          throw new Error("El código de estado debe ser un número entero.");
+        }
+
+        console.log(summarizeRequest(url, status, headersText));
+        break;
+      }
+
+      default:
+        throw new Error(`Comando desconocido: ${command}`);
     }
-  } catch (e) {
-    console.error("Error:", (e as Error).message);
-    process.exit(1);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error(`Error: ${error.message}`);
+    } else {
+      console.error("Ocurrió un error desconocido.");
+    }
+
+    process.exitCode = 1;
   }
+}
+
+if (require.main === module) {
+  main();
 }
