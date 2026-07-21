@@ -1,22 +1,26 @@
 /**
  * HTTP Inspector CLI
  *
- * Tarea de la Sesión 1: Fundamentos de la Web
+ * Tarea de la Sesión 1: Fundamentos de la Web.
  *
- * Esta tarea NO usa la red, ni async/await, ni librerías externas.
- * Solo la biblioteca estándar de Node + tipos básicos de TypeScript.
+ * Esta herramienta trabaja únicamente con la biblioteca estándar de Node.js
+ * y tipos básicos de TypeScript. No realiza solicitudes de red y tampoco
+ * utiliza async/await ni librerías externas.
  *
- * Idea: aplicar lo aprendido sobre HTTP: URLs, métodos, códigos
- * de estado y cabeceras mediante pequeñas funciones puras.
+ * Su propósito es aplicar conceptos básicos de HTTP mediante funciones puras
+ * para analizar URLs, clasificar códigos de estado, procesar cabeceras y
+ * generar un resumen legible de una petición.
  */
 
 // ---------------------------------------------------------------------------
 // Tipos
 // ---------------------------------------------------------------------------
 
-/** Resultado de analizar una URL. */
+/**
+ * Representa las partes principales obtenidas al analizar una URL.
+ */
 export interface UrlParts {
-  /** Protocolo, por ejemplo: "https:". */
+  /** Protocolo de la URL, por ejemplo: "https:". */
   protocol: string;
 
   /** Dominio y puerto, si existe. */
@@ -25,14 +29,16 @@ export interface UrlParts {
   /** Ruta de la URL. */
   pathname: string;
 
-  /** Cadena de parámetros incluyendo el signo "?". */
+  /** Cadena de búsqueda incluyendo el signo "?". */
   search: string;
 
-  /** Lista de parámetros de consulta. */
+  /** Lista de parámetros de consulta en pares clave-valor. */
   query: Array<[string, string]>;
 }
 
-/** Categorías posibles de un código de estado HTTP. */
+/**
+ * Categorías disponibles para clasificar un código de estado HTTP.
+ */
 export type StatusCategory =
   | "1xx Informativo"
   | "2xx Éxito"
@@ -41,7 +47,9 @@ export type StatusCategory =
   | "5xx Error del servidor"
   | "Desconocido";
 
-/** Objeto que representa cabeceras HTTP. */
+/**
+ * Objeto que representa un conjunto de cabeceras HTTP.
+ */
 export type Headers = Record<string, string>;
 
 // ---------------------------------------------------------------------------
@@ -52,8 +60,16 @@ export type Headers = Record<string, string>;
  * Analiza una URL y devuelve sus partes principales.
  *
  * @param url URL que se desea analizar.
- * @returns Partes principales de la URL.
- * @throws Error si la URL no es válida.
+ * @returns Objeto con protocolo, host, ruta, búsqueda y parámetros.
+ * @throws Error si la URL proporcionada no es válida.
+ *
+ * @example
+ * const result = parseUrl(
+ *   "https://api.ejemplo.com/users?id=1&name=Ana",
+ * );
+ *
+ * console.log(result.host);
+ * // "api.ejemplo.com"
  */
 export function parseUrl(url: string): UrlParts {
   const parsedUrl = new URL(url);
@@ -68,10 +84,18 @@ export function parseUrl(url: string): UrlParts {
 }
 
 /**
- * Clasifica un código de estado HTTP según su rango.
+ * Clasifica un código de estado HTTP según el rango al que pertenece.
  *
- * @param code Código de estado HTTP.
+ * @param code Código de estado HTTP que se desea clasificar.
  * @returns Categoría correspondiente al código.
+ *
+ * @example
+ * classifyStatus(200);
+ * // "2xx Éxito"
+ *
+ * @example
+ * classifyStatus(404);
+ * // "4xx Error del cliente"
  */
 export function classifyStatus(code: number): StatusCategory {
   if (code >= 100 && code <= 199) {
@@ -100,13 +124,23 @@ export function classifyStatus(code: number): StatusCategory {
 /**
  * Convierte un bloque de texto con cabeceras HTTP en un objeto.
  *
- * Cada cabecera debe tener el formato:
- * Nombre: valor
+ * Cada cabecera debe tener el formato `Nombre: valor`.
+ * Las líneas vacías y las líneas que no contienen dos puntos se ignoran.
+ * También se eliminan los espacios sobrantes del nombre y del valor.
  *
- * Las líneas vacías y las líneas sin dos puntos se ignoran.
+ * @param text Texto que contiene una o varias cabeceras HTTP.
+ * @returns Objeto con las cabeceras válidas encontradas.
  *
- * @param text Texto que contiene las cabeceras.
- * @returns Objeto con las cabeceras encontradas.
+ * @example
+ * const headers = parseHeaders(
+ *   "Content-Type: application/json\nAuthorization: Bearer abc",
+ * );
+ *
+ * console.log(headers);
+ * // {
+ * //   "Content-Type": "application/json",
+ * //   "Authorization": "Bearer abc"
+ * // }
  */
 export function parseHeaders(text: string): Headers {
   const headers: Headers = {};
@@ -139,10 +173,22 @@ export function parseHeaders(text: string): Headers {
 /**
  * Genera un resumen legible de una petición HTTP.
  *
+ * Esta función combina los resultados de `parseUrl`, `classifyStatus`
+ * y `parseHeaders`.
+ *
  * @param url URL de la petición.
  * @param status Código de estado HTTP.
- * @param headersText Cabeceras HTTP en formato de texto.
- * @returns Resumen de la petición.
+ * @param headersText Cabeceras HTTP escritas como texto.
+ * @returns Resumen de la petición en formato de texto.
+ *
+ * @example
+ * const summary = summarizeRequest(
+ *   "https://api.ejemplo.com/users",
+ *   200,
+ *   "Content-Type: application/json",
+ * );
+ *
+ * console.log(summary);
  */
 export function summarizeRequest(
   url: string,
@@ -180,7 +226,14 @@ export function summarizeRequest(
 // ---------------------------------------------------------------------------
 
 /**
- * Ejecuta el comando indicado desde la terminal.
+ * Ejecuta el comando recibido desde la terminal.
+ *
+ * Los comandos disponibles son:
+ *
+ * - `parse-url`
+ * - `status`
+ * - `headers`
+ * - `summary`
  */
 function main(): void {
   const [, , command, ...args] = process.argv;
