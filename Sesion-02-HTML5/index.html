@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <meta
     name="description"
-    content="Mini-sitio informativo sobre la gastronomía tradicional de Guatemala"
+    content="Mini-sitio sobre la gastronomía y los sabores tradicionales de Guatemala"
   >
+
   <title>Sabores de Guatemala | Inicio</title>
 </head>
 
@@ -18,64 +20,140 @@
       <a href="index.html" aria-current="page">Inicio</a>
       <a href="pagina1.html">Platillos típicos</a>
       <a href="pagina2.html">Ingredientes</a>
-      <a href="pagina3.html">Tradiciones</a>
+      <a href="pagina3.html">Tradiciones y contacto</a>
     </nav>
   </header>
 
   <main>
     <article>
       <header>
-        <h2>La riqueza de la gastronomía guatemalteca</h2>
+        <h2>Bienvenidos a la gastronomía guatemalteca</h2>
       </header>
 
       <figure>
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Pepi%C3%A1n_de_pollo.jpg"
-          alt="Plato tradicional de pepián guatemalteco"
+          alt="Plato de pepián guatemalteco acompañado con arroz"
           width="700"
           height="467"
           loading="lazy"
         >
 
         <figcaption>
-          El pepián es uno de los platillos más representativos de la
-          gastronomía guatemalteca.
+          El pepián es uno de los platillos más representativos de Guatemala.
         </figcaption>
       </figure>
 
       <p>
-        La gastronomía de Guatemala refleja la historia, la cultura y las
-        costumbres de sus diferentes regiones. Muchos platillos combinan
-        ingredientes de origen maya con productos incorporados durante la
-        época colonial.
+        La gastronomía de Guatemala es reconocida por su variedad de sabores,
+        colores e ingredientes. Muchas de sus recetas combinan tradiciones
+        mayas con influencias incorporadas a lo largo de la historia.
       </p>
 
       <section>
-        <h3>Un recorrido por nuestros sabores</h3>
+        <h2>Una cocina llena de tradición</h2>
 
         <p>
-          En este mini-sitio conocerás algunos de los platillos más
-          representativos del país, sus ingredientes principales y las
-          tradiciones relacionadas con su preparación.
+          Los platillos guatemaltecos forman parte de celebraciones familiares,
+          actividades religiosas, fiestas patronales y otras costumbres
+          importantes de cada comunidad.
         </p>
+      </section>
+
+      <section>
+        <h2>¿Qué encontrarás en este sitio?</h2>
+
+        <ul>
+          <li>Información sobre platillos típicos.</li>
+          <li>Ingredientes tradicionales.</li>
+          <li>Costumbres relacionadas con la comida.</li>
+          <li>Un espacio para compartir opiniones.</li>
+        </ul>
       </section>
     </article>
 
     <aside>
-      <h2>Dato cultural</h2>
+      <h2>Dato destacado</h2>
 
       <p>
-        Las recetas tradicionales suelen transmitirse de generación en
-        generación y forman parte importante de la identidad familiar.
+        El maíz es uno de los ingredientes más importantes de la alimentación
+        guatemalteca y se utiliza en tortillas, tamales y muchas otras recetas.
       </p>
     </aside>
+
+    <section>
+      <h2>Dato curioso</h2>
+
+      <p>
+        Presiona el botón para conocer un dato adicional sobre la gastronomía
+        del país.
+      </p>
+
+      <button
+        type="button"
+        popovertarget="info-popover"
+      >
+        Ver dato curioso
+      </button>
+
+      <div
+        id="info-popover"
+        popover
+      >
+        <h3>Tradición gastronómica</h3>
+
+        <p>
+          La gastronomía guatemalteca combina conocimientos mayas, ingredientes
+          locales y técnicas culinarias transmitidas entre generaciones.
+        </p>
+
+        <button
+          type="button"
+          popovertarget="info-popover"
+          popovertargetaction="hide"
+        >
+          Cerrar
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <h2>Más información</h2>
+
+      <p>
+        Abre el siguiente diálogo para conocer más sobre la importancia de las
+        recetas tradicionales.
+      </p>
+
+      <button
+        type="button"
+        commandfor="dialogo-info"
+        command="show-modal"
+      >
+        Abrir información
+      </button>
+
+      <dialog id="dialogo-info">
+        <h3>Sabores de Guatemala</h3>
+
+        <p>
+          Las recetas tradicionales permiten conservar la identidad cultural
+          de las familias y comunidades guatemaltecas.
+        </p>
+
+        <button
+          type="button"
+          commandfor="dialogo-info"
+          command="close"
+        >
+          Cerrar
+        </button>
+      </dialog>
+    </section>
   </main>
 
   <footer>
-    <p>
-      &copy; 2026 Sabores de Guatemala | Universidad Mariano Gálvez de
-      Guatemala
-    </p>
+    <p>&copy; 2026 Sabores de Guatemala</p>
   </footer>
 </body>
 </html>

@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta
     name="description"
-    content="Tradiciones y costumbres relacionadas con la gastronomía guatemalteca"
+    content="Tradiciones gastronómicas y formulario de contacto sobre la comida guatemalteca"
   >
-  <title>Sabores de Guatemala | Tradiciones</title>
+  <title>Sabores de Guatemala | Tradiciones y contacto</title>
 </head>
 
 <body>
@@ -18,7 +18,7 @@
       <a href="index.html">Inicio</a>
       <a href="pagina1.html">Platillos típicos</a>
       <a href="pagina2.html">Ingredientes</a>
-      <a href="pagina3.html" aria-current="page">Tradiciones</a>
+      <a href="pagina3.html" aria-current="page">Tradiciones y contacto</a>
     </nav>
   </header>
 
@@ -34,6 +34,7 @@
           alt="Platillo tradicional servido durante una celebración familiar"
           width="700"
           height="467"
+          loading="lazy"
         >
 
         <figcaption>
@@ -49,16 +50,6 @@
       </p>
 
       <section>
-        <h3>Celebraciones especiales</h3>
-
-        <p>
-          Durante fechas importantes como la Navidad, la Semana Santa y el
-          Día de Todos los Santos, las familias preparan recetas tradicionales
-          que forman parte de su identidad y patrimonio cultural.
-        </p>
-      </section>
-
-      <section>
         <h3>Tradiciones destacadas</h3>
 
         <ol>
@@ -70,13 +61,109 @@
       </section>
 
       <section>
-        <h3>Herencia familiar</h3>
+        <h3>Comparte tu platillo favorito</h3>
 
-        <p>
-          Muchas recetas han sido transmitidas de generación en generación,
-          permitiendo que los sabores, técnicas e ingredientes tradicionales
-          continúen presentes en la cocina guatemalteca.
-        </p>
+        <form action="#" method="post">
+          <p>
+            <label for="nombre">Nombre:</label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              required
+            >
+          </p>
+
+          <p>
+            <label for="correo">Correo electrónico:</label>
+            <input
+              type="email"
+              id="correo"
+              name="correo"
+              required
+            >
+          </p>
+
+          <p>
+            <label for="platillo">Platillo favorito:</label>
+            <input
+              type="text"
+              id="platillo"
+              name="platillo"
+              required
+            >
+          </p>
+
+          <p>
+            <label for="mensaje">Comentario:</label>
+            <textarea
+              id="mensaje"
+              name="mensaje"
+              rows="5"
+              cols="40"
+            ></textarea>
+          </p>
+
+          <button type="submit">Enviar información</button>
+        </form>
+      </section>
+
+      <section>
+        <h3>Información adicional</h3>
+
+        <button
+          type="button"
+          popovertarget="datos-curiosos"
+        >
+          Ver datos curiosos
+        </button>
+
+        <div id="datos-curiosos" popover>
+          <h4>Dato curioso</h4>
+
+          <p>
+            Muchos platillos guatemaltecos combinan ingredientes de origen
+            maya con técnicas culinarias incorporadas durante la época
+            colonial.
+          </p>
+
+          <button
+            type="button"
+            popovertarget="datos-curiosos"
+            popovertargetaction="hide"
+          >
+            Cerrar
+          </button>
+        </div>
+      </section>
+
+      <section>
+        <h3>Conoce más sobre las tradiciones</h3>
+
+        <button
+          type="button"
+          commandfor="dialogo-tradiciones"
+          command="show-modal"
+        >
+          Abrir información
+        </button>
+
+        <dialog id="dialogo-tradiciones">
+          <h4>Tradiciones familiares</h4>
+
+          <p>
+            Las recetas tradicionales suelen transmitirse de padres a hijos,
+            lo cual permite conservar los sabores y costumbres de cada familia.
+          </p>
+
+          <button
+            type="button"
+            commandfor="dialogo-tradiciones"
+            command="close"
+          >
+            Cerrar
+          </button>
+        </dialog>
       </section>
     </article>
   </main>
