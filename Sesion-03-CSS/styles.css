@@ -1,20 +1,16 @@
-/* TODO: Reset y estilos base */
+/*
+ * TecnoMarket Guatemala
+ * Tarea de la Sesión 3: CSS
+ *
+ * Día 1:
+ * - Estructura HTML semántica
+ * - Enlace correcto del archivo CSS externo
+ *
+ * Los estilos visuales se implementarán en los siguientes días.
+ */
 
-/* TODO: Galería de productos */
-/* Desktop (>=1024px): 3 columnas usando CSS Grid */
-/* Mobile (<768px): 1 columna con scroll vertical */
+/* Día 2: estilos base, colores, tipografía y modelo de caja. */
 
-/* TODO: Estilo de cada tarjeta de producto */
-/* - Imagen ocupa el ancho completo de la tarjeta */
-/* - Nombre del producto en negrita */
-/* - Precio destacado */
-/* - Botón "Comprar" estilizado con hover effect */
+/* Día 3: CSS Grid, diseño responsivo y To-Do List. */
 
-/* TODO: To-Do List */
-/* - Lista sin marcadores (list-style: none) */
-/* - Checkbox con label accesible */
-/* - Tareas alternadas con color de fondo (zebra striping) */
-
-/* TODO: Diseño responsivo */
-/* - Usar @media queries para cambiar entre mobile y desktop */
-/* - La galería debe ser responsiva usando Grid + media queries */
+/* Día 4 opcional: hover, transiciones y accesibilidad. */

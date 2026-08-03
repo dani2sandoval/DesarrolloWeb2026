@@ -3,115 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galería de Productos — Tarea CSS</title>
+    <meta
+        name="description"
+        content="Galería de productos tecnológicos y lista de tareas creada con HTML semántico"
+    >
+    <title>TecnoMarket Guatemala | Galería de productos</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+    <header class="encabezado">
+        <h1>TecnoMarket Guatemala</h1>
+        <p>Productos tecnológicos para estudiar, trabajar y disfrutar.</p>
+    </header>
 
     <main class="container">
-        <h1>Galería de Productos</h1>
+        <section aria-labelledby="titulo-galeria">
+            <h2 id="titulo-galeria">Galería de productos</h2>
 
-        <!-- TODO: Galería de productos
-             Cada tarjeta debe contener:
-             - Imagen del producto (usa placeholder o imágenes de ejemplo)
-             - Nombre del producto
-             - Precio
-             - Botón con texto "Comprar"
-             
-             Desktop (>=1024px): 3 columnas
-             Mobile (<768px): 1 columna con scroll vertical
-        -->
-        <section class="galeria">
+            <div class="galeria">
+                <article class="producto">
+                    <img
+                        src="https://via.placeholder.com/300x200?text=Laptop"
+                        alt="Laptop para estudio y trabajo"
+                        width="300"
+                        height="200"
+                    >
 
-            <article class="producto">
-                <img src="https://via.placeholder.com/300x200/e0e0e0/333?text=Producto+1" alt="Producto 1">
-                <div class="producto-info">
-                    <h2>Nombre del Producto 1</h2>
-                    <p class="precio">Q99.99</p>
-                    <button class="btn-comprar">Comprar</button>
-                </div>
-            </article>
+                    <div class="producto-info">
+                        <h3>Laptop Lenovo IdeaPad</h3>
+                        <p class="precio">Q5,499.00</p>
+                        <button class="btn-comprar" type="button">Comprar</button>                        
+                    </div>
+                </article>
 
-            <article class="producto">
-                <img src="https://via.placeholder.com/300x200/e0e0e0/333?text=Producto+2" alt="Producto 2">
-                <div class="producto-info">
-                    <h2>Nombre del Producto 2</h2>
-                    <p class="precio">Q149.99</p>
-                    <button class="btn-comprar">Comprar</button>
-                </div>
-            </article>
+                <article class="producto">
+                    <img
+                        src="https://via.placeholder.com/300x200?text=Teclado"
+                        alt="Teclado mecánico con iluminación"
+                        width="300"
+                        height="200"
+                    >
 
-            <article class="producto">
-                <img src="https://via.placeholder.com/300x200/e0e0e0/333?text=Producto+3" alt="Producto 3">
-                <div class="producto-info">
-                    <h2>Nombre del Producto 3</h2>
-                    <p class="precio">Q199.99</p>
-                    <button class="btn-comprar">Comprar</button>
-                </div>
-            </article>
+                    <div class="producto-info">
+                        <h3>Teclado mecánico RGB</h3>
+                        <p class="precio">Q399.00</p>
+                        <button class="btn-comprar" type="button">Comprar</button>
+                    </div>
+                </article>
 
-            <article class="producto">
-                <img src="https://via.placeholder.com/300x200/e0e0e0/333?text=Producto+4" alt="Producto 4">
-                <div class="producto-info">
-                    <h2>Nombre del Producto 4</h2>
-                    <p class="precio">Q79.99</p>
-                    <button class="btn-comprar">Comprar</button>
-                </div>
-            </article>
+                <article class="producto">
+                    <img
+                        src="https://via.placeholder.com/300x200?text=Mouse"
+                        alt="Mouse inalámbrico ergonómico"
+                        width="300"
+                        height="200"
+                    >
 
-            <article class="producto">
-                <img src="https://via.placeholder.com/300x200/e0e0e0/333?text=Producto+5" alt="Producto 5">
-                <div class="producto-info">
-                    <h2>Nombre del Producto 5</h2>
-                    <p class="precio">Q249.99</p>
-                    <button class="btn-comprar">Comprar</button>
-                </div>
-            </article>
+                    <div class="producto-info">
+                        <h3>Mouse inalámbrico</h3>
+                        <p class="precio">Q189.00</p>
+                        <button class="btn-comprar" type="button">Comprar</button>
+                    </div>
+                </article>
 
-            <article class="producto">
-                <img src="https://via.placeholder.com/300x200/e0e0e0/333?text=Producto+6" alt="Producto 6">
-                <div class="producto-info">
-                    <h2>Nombre del Producto 6</h2>
-                    <p class="precio">Q299.99</p>
-                    <button class="btn-comprar">Comprar</button>
-                </div>
-            </article>
+                <article class="producto">
+                    <img
+                        src="https://via.placeholder.com/300x200?text=Audifonos"
+                        alt="Audífonos con micrófono incorporado"
+                        width="300"
+                        height="200"
+                    >
 
+                    <div class="producto-info">
+                        <h3>Audífonos con micrófono</h3>
+                        <p class="precio">Q299.00</p>
+                        <button class="btn-comprar" type="button">Comprar</button>
+                    </div>
+                </article>
+
+                <article class="producto">
+                    <img
+                        src="https://via.placeholder.com/300x200?text=Webcam"
+                        alt="Cámara web de alta definición"
+                        width="300"
+                        height="200"
+                    >
+
+                    <div class="producto-info">
+                        <h3>Cámara web Full HD</h3>
+                        <p class="precio">Q349.00</p>
+                        <button class="btn-comprar" type="button">Comprar</button>
+                    </div>
+                </article>
+
+                <article class="producto">
+                    <img
+                        src="https://via.placeholder.com/300x200?text=Monitor"
+                        alt="Monitor de veinticuatro pulgadas"
+                        width="300"
+                        height="200"
+                    >
+
+                    <div class="producto-info">
+                        <h3>Monitor de 24 pulgadas</h3>
+                        <p class="precio">Q1,599.00</p>
+                        <button class="btn-comprar" type="button">Comprar</button>
+                    </div>
+                </article>
+            </div>
         </section>
 
-        <h2>To-Do List</h2>
+        <section class="todo-list" aria-labelledby="titulo-tareas">
+            <h2 id="titulo-tareas">To-Do List de Desarrollo Web</h2>
 
-        <!-- TODO: Layout de Todo List
-             Lista de tareas estilizada con:
-             - Checkbox para marcar completado
-             - Texto de la tarea
-             - Diseño limpio y accesible
-        -->
-        <section class="todo-list">
-            <ul class="tareas" role="list">
+            <ul class="tareas">
                 <li class="tarea">
-                    <input type="checkbox" id="t1">
-                    <label for="t1">Aprender CSS Grid</label>
+                    <input type="checkbox" id="tarea-1">
+                    <label for="tarea-1">
+                        Revisar la estructura semántica del HTML
+                    </label>
                 </li>
+
                 <li class="tarea">
-                    <input type="checkbox" id="t2">
-                    <label for="t2">Practicar Flexbox</label>
+                    <input type="checkbox" id="tarea-2">
+                    <label for="tarea-2">
+                        Practicar CSS Grid
+                    </label>
                 </li>
+
                 <li class="tarea">
-                    <input type="checkbox" id="t3">
-                    <label for="t3">Estudiar diseño responsivo</label>
+                    <input type="checkbox" id="tarea-3">
+                    <label for="tarea-3">
+                        Aplicar el modelo de caja
+                    </label>
                 </li>
+
                 <li class="tarea">
-                    <input type="checkbox" id="t4">
-                    <label for="t4">Hacer la tarea de CSS</label>
+                    <input type="checkbox" id="tarea-4">
+                    <label for="tarea-4">
+                        Crear el diseño responsivo
+                    </label>
                 </li>
+
                 <li class="tarea">
-                    <input type="checkbox" id="t5">
-                    <label for="t5">Revisar novedades de CSS 2024</label>
+                    <input type="checkbox" id="tarea-5">
+                    <label for="tarea-5">
+                        Ejecutar las pruebas automáticas
+                    </label>
                 </li>
             </ul>
         </section>
     </main>
 
+    <footer class="pie-pagina">
+        <p>
+            &copy; 2026 TecnoMarket Guatemala — Universidad Mariano Gálvez
+        </p>
+    </footer>
 </body>
 </html>
