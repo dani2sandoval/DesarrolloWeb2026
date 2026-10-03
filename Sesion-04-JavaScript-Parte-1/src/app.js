@@ -70,8 +70,15 @@ export function eliminarTarea(id) {
  * @returns {boolean}
  */
 export function toggleTarea(id) {
-    // TODO: recorrer `tareas` y cambiar `completada` de la que coincida.
-    // Devuelve true si la encontró.
+    const tarea = tareas.find((tarea) => tarea.id === id);
+
+    if (!tarea) {
+        return false;
+    }
+
+    tarea.completada = !tarea.completada;
+
+    return true;
 }
 
 /**
@@ -80,24 +87,36 @@ export function toggleTarea(id) {
  * @returns {Array}
  */
 export function filtrarTareas(filtro) {
-    // TODO: implementar la lógica de filtrado.
+    if (filtro === "pendientes") {
+        return tareas.filter((tarea) => !tarea.completada);
+    }
+
+    if (filtro === "completadas") {
+        return tareas.filter((tarea) => tarea.completada);
+    }
+
+    return tareas;
 }
 
 /**
  * Persiste el array `tareas` en localStorage como JSON.
  */
 export function guardar() {
-    // TODO: usar localStorage.setItem con la clave STORAGE_KEY.
-    // El valor debe ser JSON.stringify(tareas).
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tareas));
 }
 
-/**
- * Carga las tareas desde localStorage. Si no hay nada, deja el array vacío.
- */
 export function cargar() {
-    // TODO: leer localStorage con STORAGE_KEY.
-    // Si existe, hacer JSON.parse y asignarlo a `tareas`.
-    // Si no existe o falla, `tareas` se queda como [].
+    try {
+        const datosGuardados = localStorage.getItem(STORAGE_KEY);
+
+        if (datosGuardados) {
+            tareas = JSON.parse(datosGuardados);
+        } else {
+            tareas = [];
+        }
+    } catch (error) {
+        tareas = [];
+    }
 }
 
 // =====================================================
